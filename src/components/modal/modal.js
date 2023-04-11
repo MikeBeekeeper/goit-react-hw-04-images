@@ -26,7 +26,7 @@ const Modal = ({ onModalClick, children }) => {
     return () => {
       window.removeEventListener('keydown', hideModalKeydown);
     };
-  }, [hideModalKeydown]);
+  }, []);
 
   return (
     <div className={css.Overlay} onClick={hideModalClick} data-action="overlay">
