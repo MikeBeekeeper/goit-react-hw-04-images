@@ -1,17 +1,22 @@
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import css from '../modal/modal.module.css';
 
 const Modal = ({ onModalClick, children }) => {
-  const hideModalKeydown = e => {
-    if (e.key === 'Escape') {
-      onModalClick();
-      // window.removeEventListener('keydown', hideModalKeydown)
-    }
-  };
+  // const hideModalKeydown = e => {
+  //   if (e.key === 'Escape') {
+  //     onModalClick();
+  //   }
+  // };
 
-  const hideModalClick = e => {
-    if (e.target.dataset.action === 'overlay') {
+  const hideModalKeydown = useCallback(({key, target, currentTarget}) => {
+    if (key === 'Escape') {
+      hideModalClick(target,currentTarget);
+    }
+  });
+
+  const hideModalClick = ({target,currentTarget}) => {
+    if (target === currentTarget) {
       onModalClick();
     }
   };
@@ -21,7 +26,7 @@ const Modal = ({ onModalClick, children }) => {
     return () => {
       window.removeEventListener('keydown', hideModalKeydown);
     };
-  }, []);
+  }, [hideModalKeydown]);
 
   return (
     <div className={css.Overlay} onClick={hideModalClick} data-action="overlay">
