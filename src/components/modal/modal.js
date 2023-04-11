@@ -9,17 +9,19 @@ const Modal = ({ onModalClick, children }) => {
   //   }
   // };
 
+  const hideModalClick = ({target,currentTarget}) => {
+    if (target === currentTarget) {
+      onModalClick();
+    }
+  };
+
   const hideModalKeydown = useCallback(({key, target, currentTarget}) => {
     if (key === 'Escape') {
       hideModalClick(target,currentTarget);
     }
   }, [hideModalClick]);
 
-  const hideModalClick = ({target,currentTarget}) => {
-    if (target === currentTarget) {
-      onModalClick();
-    }
-  };
+  
 
   useEffect(() => {
     window.addEventListener('keydown', hideModalKeydown);
