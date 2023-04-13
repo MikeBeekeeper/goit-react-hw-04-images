@@ -3,32 +3,27 @@ import React, { useEffect, useCallback } from 'react';
 import css from '../modal/modal.module.css';
 
 const Modal = ({ onModalClick, children }) => {
-  // const hideModalKeydown = e => {
-  //   if (e.key === 'Escape') {
-  //     onModalClick();
-  //   }
-  // };
+  const onESCClick = useCallback(
+    ({ code, target, currentTarget }) => {
+      if (code === 'Escape') {
+        onModalClick(target, currentTarget);
+      }
+    },
+    [onModalClick]
+  );
 
-  const hideModalClick = ({target,currentTarget}) => {
+  const hideModalClick = ({ target, currentTarget }) => {
     if (target === currentTarget) {
       onModalClick();
     }
   };
 
-  const hideModalKeydown = useCallback(({key, target, currentTarget}) => {
-    if (key === 'Escape') {
-      hideModalClick(target,currentTarget);
-    }
-  }, [hideModalClick]);
-
-  
-
   useEffect(() => {
-    window.addEventListener('keydown', hideModalKeydown);
+    window.addEventListener('keydown', onESCClick);
     return () => {
-      window.removeEventListener('keydown', hideModalKeydown);
+      window.removeEventListener('keydown', onESCClick);
     };
-  }, [hideModalKeydown]);
+  }, [onESCClick]);
 
   return (
     <div className={css.Overlay} onClick={hideModalClick} data-action="overlay">

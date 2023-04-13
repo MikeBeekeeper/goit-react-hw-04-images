@@ -6,8 +6,8 @@ import css from '../imageGalleryItem/imageGalleryItem.module.css';
 const ImageGalleryItem = ({ webformatURL, tags, largeImageURL }) => {
   const [showModal, setShowModal] = useState(false);
 
-  const toggleModal = () => {
-    setShowModal(prev => !prev);
+  const hideModal = ({ target, currentTarget }) => {
+    if (target === currentTarget) setShowModal(false);
   };
 
   return (
@@ -16,10 +16,10 @@ const ImageGalleryItem = ({ webformatURL, tags, largeImageURL }) => {
         className={css.ImageGalleryItemImage}
         src={webformatURL}
         alt={tags}
-        onClick={toggleModal}
+        onClick={setShowModal(true)}
       />
       {showModal && (
-        <Modal onModalClick={toggleModal}>
+        <Modal onModalClick={hideModal}>
           <img src={largeImageURL} alt={tags} />
         </Modal>
       )}
