@@ -16,7 +16,7 @@ const ImageGalleryItem = ({ webformatURL, tags, largeImageURL }) => {
         className={css.ImageGalleryItemImage}
         src={webformatURL}
         alt={tags}
-        onClick={setShowModal(true)}
+        onClick={() => {setShowModal(true)}}
       />
       {showModal && (
         <Modal onModalClick={hideModal}>

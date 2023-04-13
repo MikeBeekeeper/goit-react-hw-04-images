@@ -14,7 +14,7 @@ const Modal = ({ onModalClick, children }) => {
 
   const hideModalClick = ({ target, currentTarget }) => {
     if (target === currentTarget) {
-      onModalClick();
+      onModalClick(target, currentTarget);
     }
   };
 
